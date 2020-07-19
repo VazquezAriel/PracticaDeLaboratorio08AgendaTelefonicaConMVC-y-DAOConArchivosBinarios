@@ -5,7 +5,6 @@
  */
 package ec.edu.ups.modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,30 +20,25 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String contraseña;
-    //atributo de agregacion
-    private List<Telefono> telefonos;
 
     //constructores
     public Usuario() {
-        telefonos = new ArrayList<>();
     }
 
     public Usuario(String cedula, String nombre, String apellido, String correo, String contraseña) {
         this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
+        this.nombre = validarEspacios(nombre, 25);
+        this.apellido = validarEspacios(apellido, 25);
+        this.correo = validarEspacios(correo, 50);
         this.contraseña = contraseña;
-        telefonos = new ArrayList<>();
     }
 
     public Usuario(String cedula, String nombre, String apellido, String correo, String contraseña, List<Telefono> telefonos) {
         this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
+        this.nombre = validarEspacios(nombre, 25);
+        this.apellido = validarEspacios(apellido, 25);
+        this.correo = validarEspacios(correo, 50);
         this.contraseña = contraseña;
-        this.telefonos = telefonos;
     }
 
     //Metodos Get y Set
@@ -87,36 +81,30 @@ public class Usuario {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-
-    //Agrega un telefono a la lista telefonos
-    public void agregarTelefono(Telefono telefono) {
-        telefonos.add(telefono);
+    
+    public String validarEspacios(String cadena, int longitud) {
+        if (cadena.length() == longitud) {
+            return cadena;
+            
+        } else {
+            if (cadena.length() < longitud) {
+                return llenarEspacios(cadena, longitud);
+                
+            } else {
+                return cortarEspacios(cadena, longitud);
+                
+            }
+        }
     }
-
-    //Actualiza el telefono ingresado en la lista telefonos
-    public void editarTelefono(Telefono telefono) {
-        int index = telefonos.indexOf(telefono);
-        telefonos.set(index, telefono);
+    
+    public String llenarEspacios(String cadena, int longitud) {
+        return String.format("%-"+longitud+"s", cadena);
+        
     }
-
-    //Elimina el telefono ingresado de la lista telefonos
-    public void eliminarTelefono(Telefono telefono) {
-        int index = telefonos.indexOf(telefono);
-        telefonos.remove(index);
-    }
-
-    //Busca el Telefono correspondiente al codigo ingresado
-    public Telefono buscarTelefono(int codigo) {
-        return telefonos.get(codigo);
-    }
-
-    //debuelve la lista telefonos
-    public List<Telefono> listarTelefonos() {
-        return telefonos;
-    }
-
-    public void setTelefonos(List<Telefono> telefonos) {
-        this.telefonos = telefonos;
+    
+    public String cortarEspacios(String cadena, int longitud) {
+        return cadena.substring(0, longitud);
+        
     }
 
     //Metodos de la clase Object
@@ -151,11 +139,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        if (!listarTelefonos().isEmpty()) {
-            System.out.println("Telefonos: " + listarTelefonos());
-        } else {
-            System.out.println("Aun no tiene ningun telefono registrado");
-        }
         return "{" + "cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", contrase\u00f1a=" + contraseña + '}';
     }
 

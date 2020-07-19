@@ -214,10 +214,31 @@ public class VentanaRegistrarUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
-        controladorUsuario.registrar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), txtContraseña.getText());
-        JOptionPane.showMessageDialog(this, "Usuario creado con exito");
-        limpiar();
-        setVisible(false);
+
+        if (txtCedula.getText().equals("") || txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtCorreo.equals("") || txtContraseña.equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellene todos los campos");
+
+        } else {
+            
+            //Validamos que la cedula tenga 10 digitos
+            if (txtCedula.getText().length() == 10) {
+                
+                //Validamos que la contraseña tenga 8 digitos
+                if (txtContraseña.getText().length() == 8) {
+                    controladorUsuario.registrar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), txtContraseña.getText());
+                    JOptionPane.showMessageDialog(this, "Usuario creado con exito");
+                    limpiar();
+                    setVisible(false);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "La contraseña debe contar con 8 digitos");
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La cedula debe tener 10 digitos");
+
+            }
+        }
     }//GEN-LAST:event_botonRegistrarActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed

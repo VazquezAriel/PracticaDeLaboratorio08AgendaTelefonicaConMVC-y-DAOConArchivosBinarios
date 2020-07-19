@@ -18,6 +18,7 @@ public class Telefono {
     private String numero;
     private String tipo;
     private String operadora;
+//    private Usuario usuario;
 
     //Constructor sin parametros
     public Telefono() {
