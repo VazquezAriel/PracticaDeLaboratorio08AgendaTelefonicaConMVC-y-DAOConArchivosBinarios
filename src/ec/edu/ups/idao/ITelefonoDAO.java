@@ -6,7 +6,7 @@
 package ec.edu.ups.idao;
 
 import ec.edu.ups.modelo.Telefono;
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -19,6 +19,6 @@ public interface ITelefonoDAO {
     public Telefono read(int codigo);
     public void update(Telefono telefono);
     public void delete(Telefono telefono);
-    public Collection<Telefono> findAll();
+    public List<Telefono> findAll();
     public int obtenerUltimoCodigo();
 }

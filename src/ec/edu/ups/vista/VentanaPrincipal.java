@@ -53,7 +53,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         //Se instancia el patron MVC
         usuarioDAO = new UsuarioDAO();
-        telefonoDAO = new TelefonoDAO();
+        telefonoDAO = new TelefonoDAO(usuarioDAO);
 
         controladorUsuario = new ControladorUsuario(usuarioDAO, telefonoDAO);
         controladorTelefono = new ControladorTelefono(telefonoDAO);

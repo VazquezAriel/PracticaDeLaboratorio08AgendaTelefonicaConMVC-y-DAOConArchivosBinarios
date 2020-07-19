@@ -73,7 +73,7 @@ public class UsuarioDAO implements IUsuarioDAO {
                 archivo.seek(salto);
                 String cedulaArchivo = archivo.readUTF();
                 
-                if (cedulaArchivo.equals(cedula)) {
+                if (cedula.equals(cedulaArchivo)) {
                     return new Usuario(cedula, archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF(), false);
                     
                 }
@@ -82,7 +82,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             }
 
         } catch (IOException e) {
-            System.out.println("Error de lectura (login: UsuarioDAO)");
+            System.out.println("Error de lectura (read: UsuarioDAO)");
             e.printStackTrace();
 
         }

@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author ariel
  */
 public class Telefono {
-    
+
     //Atributos
     private int codigo;
     private String numero;
@@ -22,15 +22,25 @@ public class Telefono {
 
     //Constructor sin parametros
     public Telefono() {
-        
+
     }
 
     //Constructor con parametros
-    public Telefono(int codigo, String numero, String tipo, String operadora) {
+    public Telefono(int codigo, String numero, String tipo, String operadora, boolean validar) {
+
+        if (validar) {
+            this.numero = validarEspacios(numero, 25);
+            this.tipo = validarEspacios(tipo, 25);
+            this.operadora = validarEspacios(operadora, 25);
+            
+        } else {
+            this.numero = numero;
+            this.tipo = tipo;
+            this.operadora = operadora;
+            
+        }
         this.codigo = codigo;
-        this.numero = validarEspacios(numero, 25);
-        this.tipo = validarEspacios(tipo, 25);
-        this.operadora = validarEspacios(operadora, 25);
+        
     }
 
     //Metodos Get y Set
@@ -73,30 +83,30 @@ public class Telefono {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
     public String validarEspacios(String cadena, int longitud) {
         if (cadena.length() == longitud) {
             return cadena;
-            
+
         } else {
             if (cadena.length() < longitud) {
                 return llenarEspacios(cadena, longitud);
-                
+
             } else {
                 return cortarEspacios(cadena, longitud);
-                
+
             }
         }
     }
-    
+
     public String llenarEspacios(String cadena, int longitud) {
-        return String.format("%-"+longitud+"s", cadena);
-        
+        return String.format("%-" + longitud + "s", cadena);
+
     }
-    
+
     public String cortarEspacios(String cadena, int longitud) {
         return cadena.substring(0, longitud);
-        
+
     }
 
     //Metodos de la clase Object
@@ -129,5 +139,5 @@ public class Telefono {
     public String toString() {
         return "Telefono{" + "codigo=" + codigo + ", numero=" + numero + ", tipo=" + tipo + ", operadora=" + operadora + '}';
     }
-   
+
 }

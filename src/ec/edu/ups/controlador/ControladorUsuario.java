@@ -9,6 +9,7 @@ import ec.edu.ups.idao.ITelefonoDAO;
 import ec.edu.ups.idao.IUsuarioDAO;
 import ec.edu.ups.modelo.Telefono;
 import ec.edu.ups.modelo.Usuario;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ControladorUsuario {
         this.telefonoDAO = telefonoDAO;
     }
 
-    //Crea un Usuario atraves de la vista y lo agrega al diccionario creado en el DAO
+    //Crea un Usuario con los datos de la vista y lo agrega al archivo creado en el DAO
     public void registrar(String cedula, String nombre, String apellido, String correo, String contraseña) {
         usuario = new Usuario(cedula, nombre, apellido, correo, contraseña, true);
         usuarioDAO.create(usuario);
@@ -47,7 +48,7 @@ public class ControladorUsuario {
         return usuario;
     }
 
-    //Genera un Usuario con la clave ingresada atraves de la vista y lo remplaza atraves del DAO
+    //Genera un Usuario con los datos ingresada atraves de la vista y lo remplaza atraves del DAO
     public void actualizar(String cedula, String nombre, String apellido, String correo, String contraseña) {
         usuario = new Usuario(cedula, nombre, apellido, correo, contraseña, true);
         usuarioDAO.update(usuario);
@@ -92,32 +93,56 @@ public class ControladorUsuario {
 
     //Genera un Usuario con la clave ingresada y a este se le agrega el telefono ingresado
     public void agregarTelefono(int codigo, String numero, String tipo, String operadora) {
-        telefono = new Telefono(codigo, numero, tipo, operadora);
+        telefono = new Telefono(codigo, numero, tipo, operadora, true);
         telefono.setUsuario(usuario);
         telefonoDAO.create(telefono);
+        
     }
 
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y elimina dicho telefono del Usuario
     public void eliminarTelefono(int codigo) {
+        telefono.setCodigo(codigo);
+        telefonoDAO.delete(telefono);
         
     }
 
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y actualiza dicho telefono del Usuario
     public void editarTelefono(int codigo, String numero, String tipo, String operadora) {
+        telefono = new Telefono(codigo, numero, tipo, operadora, true);
+        telefono.setUsuario(usuario);
+        telefonoDAO.update(telefono);
+        
         
     }
     
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y compara si dicho telefono esta agregado en el Usuario
     public void buscarTelefono(String cedula) {
-        
+        telefonoDAO.read(telefono.getCodigo());
     }
     
     //Obtiene un Usuario atraves del DAO con la clave ingresada y muestra en pantalla todos los Telefonos agregados en el Usuario atraves de la vista
     public List<Telefono> listarTelefonos() {
-        return null;
+        List<Telefono> telefonos = new ArrayList<Telefono>();
+        for (Telefono telefono1 : telefonoDAO.findAll()) {
+            if (usuario.getCedula().equals(telefono1.getUsuario().getCedula())) {
+                telefonos.add(telefono1);
+            }
+        }
+        return telefonos;
     }
 
+    public List<Telefono> listarTelefonos(Usuario usuario) {
+        List<Telefono> telefonos = new ArrayList<Telefono>();
+        for (Telefono telefono1 : telefonoDAO.findAll()) {
+            if (usuario.getCedula().equals(telefono1.getUsuario().getCedula())) {
+                telefonos.add(telefono1);
+            }
+        }
+        return telefonos;
+    }
+    
     public Usuario buscarUsuario(String cedula) {
+        
         return usuarioDAO.read(cedula);
     }
 

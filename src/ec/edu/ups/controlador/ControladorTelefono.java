@@ -8,6 +8,7 @@ package ec.edu.ups.controlador;
 import ec.edu.ups.idao.ITelefonoDAO;
 import ec.edu.ups.modelo.Telefono;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ControladorTelefono {
         this.telefonosDAO = telefonosDAO;
     }
 
-    //Crea un Telefono atraves de la vista y lo agrega al diccionario creado en el DAO
+    //Crea un Telefono atraves de la vista y lo agrega al archivo creado en el DAO
     public Telefono crear(Telefono telefono) {
         telefonosDAO.create(telefono);
         return telefono;
@@ -52,8 +53,8 @@ public class ControladorTelefono {
     }
     
     //Muestra todos los Telefonos existentes en el DAO
-    public Collection<Telefono>  verTelefonos() {
-        Collection<Telefono> telefonos;
+    public List<Telefono>  verTelefonos() {
+        List<Telefono> telefonos;
         telefonos = telefonosDAO.findAll();
         if (!telefonos.isEmpty()) {
             return telefonos;
