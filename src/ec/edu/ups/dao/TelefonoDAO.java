@@ -107,11 +107,12 @@ public class TelefonoDAO implements ITelefonoDAO {
                 int codigoArchivo = archivo.readInt();
 
                 if (telefono.getCodigo() == codigoArchivo) {
-                    archivo.seek((long)(salto - 4));
-                    archivo.writeUTF("");
-                    archivo.writeUTF("");
-                    archivo.writeUTF("");
-                    archivo.writeUTF("");
+                    archivo.seek(salto);
+                    archivo.writeInt(0);
+                    archivo.writeUTF(telefono.getNumero());
+                    archivo.writeUTF(telefono.getTipo());
+                    archivo.writeUTF(telefono.getOperadora());
+                    archivo.writeUTF(telefono.validarEspacios("", 10));
                     break;
 
                 }
@@ -136,8 +137,10 @@ public class TelefonoDAO implements ITelefonoDAO {
                 archivo.seek(salto);
                 Telefono telefono = new Telefono(archivo.readInt(), archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF().trim(), false);
                 telefono.setUsuario(usuarioDAO.read(archivo.readUTF()));
-                telefonos.add(telefono);
-
+                if (telefono.getCodigo() != 0) {
+                   telefonos.add(telefono);
+                   
+                }
                 salto += 97;
 
             }

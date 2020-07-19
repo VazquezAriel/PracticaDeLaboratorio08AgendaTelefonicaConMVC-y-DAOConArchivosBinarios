@@ -101,7 +101,7 @@ public class ControladorUsuario {
 
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y elimina dicho telefono del Usuario
     public void eliminarTelefono(int codigo) {
-        telefono.setCodigo(codigo);
+        telefono = new Telefono(codigo, "", "", "", true);
         telefonoDAO.delete(telefono);
         
     }
