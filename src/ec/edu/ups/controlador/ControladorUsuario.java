@@ -91,46 +91,30 @@ public class ControladorUsuario {
     }
 
     //Genera un Usuario con la clave ingresada y a este se le agrega el telefono ingresado
-    public void agregarTelefono(String codigo, String numero, String tipo, String operadora) {
+    public void agregarTelefono(int codigo, String numero, String tipo, String operadora) {
         telefono = new Telefono(codigo, numero, tipo, operadora);
+        telefono.setUsuario(usuario);
         telefonoDAO.create(telefono);
-        usuario.agregarTelefono(telefono);
-        usuarioDAO.update(usuario);
     }
 
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y elimina dicho telefono del Usuario
-    public void eliminarTelefono(String codigo) {
-        telefono = telefonoDAO.read(codigo);
-        if (telefono != null) {
-            telefonoDAO.delete(telefono);
-            usuario.eliminarTelefono(telefono);
-            usuarioDAO.update(usuario);
-            telefono = null;
-        }
+    public void eliminarTelefono(int codigo) {
+        
     }
 
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y actualiza dicho telefono del Usuario
-    public void editarTelefono(String codigo, String numero, String tipo, String operadora) {
-        telefono = new Telefono(codigo, numero, tipo, operadora);
-        telefonoDAO.update(telefono);
-        usuario.editarTelefono(telefono);
-        usuarioDAO.update(usuario);
+    public void editarTelefono(int codigo, String numero, String tipo, String operadora) {
+        
     }
     
     //Obtiene un Usuario atraves del DAO con la clave ingresada, Obtiene un Telefono atraves de la vista y compara si dicho telefono esta agregado en el Usuario
     public void buscarTelefono(String cedula) {
-        usuario = usuarioDAO.read(cedula);
-        if (usuario.listarTelefonos().contains(telefono)) {
-            System.out.println("\nTelefono encontrado: ");
-            System.out.println(telefono);
-        } else {
-            System.out.println("\nTelefono no encontrado");
-        }
+        
     }
     
     //Obtiene un Usuario atraves del DAO con la clave ingresada y muestra en pantalla todos los Telefonos agregados en el Usuario atraves de la vista
     public List<Telefono> listarTelefonos() {
-        return usuario.listarTelefonos();
+        return null;
     }
 
     public Usuario buscarUsuario(String cedula) {

@@ -16,7 +16,7 @@ public interface ITelefonoDAO {
     
     //Metodos CRUD
     public void create(Telefono telefono);
-    public Telefono read(String codigo);
+    public Telefono read(int codigo);
     public void update(Telefono telefono);
     public void delete(Telefono telefono);
     public Collection<Telefono> findAll();

@@ -14,11 +14,11 @@ import java.util.Objects;
 public class Telefono {
     
     //Atributos
-    private String codigo;
+    private int codigo;
     private String numero;
     private String tipo;
     private String operadora;
-//    private Usuario usuario;
+    private Usuario usuario;
 
     //Constructor sin parametros
     public Telefono() {
@@ -26,19 +26,19 @@ public class Telefono {
     }
 
     //Constructor con parametros
-    public Telefono(String codigo, String numero, String tipo, String operadora) {
+    public Telefono(int codigo, String numero, String tipo, String operadora) {
         this.codigo = codigo;
-        this.numero = numero;
-        this.tipo = tipo;
-        this.operadora = operadora;
+        this.numero = validarEspacios(numero, 25);
+        this.tipo = validarEspacios(tipo, 25);
+        this.operadora = validarEspacios(operadora, 25);
     }
 
     //Metodos Get y Set
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -64,6 +64,39 @@ public class Telefono {
 
     public void setOperadora(String operadora) {
         this.operadora = operadora;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    public String validarEspacios(String cadena, int longitud) {
+        if (cadena.length() == longitud) {
+            return cadena;
+            
+        } else {
+            if (cadena.length() < longitud) {
+                return llenarEspacios(cadena, longitud);
+                
+            } else {
+                return cortarEspacios(cadena, longitud);
+                
+            }
+        }
+    }
+    
+    public String llenarEspacios(String cadena, int longitud) {
+        return String.format("%-"+longitud+"s", cadena);
+        
+    }
+    
+    public String cortarEspacios(String cadena, int longitud) {
+        return cadena.substring(0, longitud);
+        
     }
 
     //Metodos de la clase Object

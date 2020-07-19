@@ -15,34 +15,33 @@ import java.util.Collection;
  *
  * @author ariel
  */
-public class UsuarioDAO implements IUsuarioDAO{
-    
+public class UsuarioDAO implements IUsuarioDAO {
+
     /**
      * Tamaño del archivo:
-     * 
-     * cedula -> 10 caracteres
-     * nombre -> 25 caracteres
-     * apellido -> 25 de caracteres
-     * correo -> 50 caracteres      
+     *
+     * cedula -> 10 caracteres 
+     * nombre -> 25 caracteres 
+     * apellido -> 25 caracteres 
+     * correo -> 50 caracteres 
      * contraseña -> 8 caracteres
-     * 
+     *
      * Total -> 118 bytes + 10 bytes extras = 128 bytes por registro
-     * 
+     *
      */
     
     //archivo binario
     private RandomAccessFile archivo;
 
-
     //Constructor
     public UsuarioDAO() {
-        try{
-        archivo = new RandomAccessFile("Datos/Usuarios.dat", "rw");
-        
-        }catch(IOException e){
+        try {
+            archivo = new RandomAccessFile("Datos/Usuarios.dat", "rw");
+
+        } catch (IOException e) {
             System.out.println("Error de  lectura y escritura");
             e.printStackTrace();
-            
+
         }
     }
 
@@ -56,17 +55,37 @@ public class UsuarioDAO implements IUsuarioDAO{
             archivo.writeUTF(usuario.getApellido());
             archivo.writeUTF(usuario.getCorreo());
             archivo.writeUTF(usuario.getContraseña());
-            
+
         } catch (IOException e) {
             System.out.println("Error de  lectura y escritura(create:UsuarioDao)");
             e.printStackTrace();
-            
+
         }
-        
+
     }
 
     @Override
     public Usuario read(String cedula) {
+        try {
+            int salto = 0;
+            
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                String cedulaArchivo = archivo.readUTF();;
+                
+                if (cedulaArchivo.equals(cedula)) {
+                    return new Usuario(cedula, archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF());
+                    
+                }
+                salto += 128;
+
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error de lectura (login: UsuarioDAO)");
+            e.printStackTrace();
+
+        }
         return null;
     }
 
@@ -85,7 +104,29 @@ public class UsuarioDAO implements IUsuarioDAO{
 
     @Override
     public Usuario login(String correo, String contraseña) {
+        try {
+            int salto = 66;
+            
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                String correoArchivo = archivo.readUTF();
+                String contraseñaArchivo = archivo.readUTF();
+                
+                if (correoArchivo.trim().equals(correo) && contraseñaArchivo.equals(contraseña)) {
+                    archivo.seek(salto - 66);
+                    return new Usuario(archivo.readUTF(), archivo.readUTF().trim(), archivo.readUTF().trim(), correo, contraseña);
+                    
+                }
+                salto += 128;
+
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error de lectura (login: UsuarioDAO)");
+            e.printStackTrace();
+
+        }
         return null;
     }
-    
+
 }

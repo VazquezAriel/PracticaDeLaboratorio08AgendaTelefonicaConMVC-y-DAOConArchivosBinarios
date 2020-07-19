@@ -368,7 +368,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jFormattedTextFieldNumeroActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        controladorUsuario.agregarTelefono(txtCodigo.getText(), jFormattedTextFieldNumero.getText(), jComboBoxTipo.getSelectedItem().toString(), jComboBoxOperadora.getSelectedItem().toString());
+        controladorUsuario.agregarTelefono(Integer.valueOf(txtCodigo.getText()), jFormattedTextFieldNumero.getText(), jComboBoxTipo.getSelectedItem().toString(), jComboBoxOperadora.getSelectedItem().toString());
         cargarTelefonosTblTelefonos();
         limpiar();
         JOptionPane.showMessageDialog(this, "Telefono agregado correctamente");
@@ -399,7 +399,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaTelefonosMouseClicked
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        controladorUsuario.editarTelefono(txtCodigo.getText(), jFormattedTextFieldNumero.getText(), jComboBoxTipo.getSelectedItem().toString(), jComboBoxOperadora.getSelectedItem().toString());
+        controladorUsuario.editarTelefono(Integer.valueOf(txtCodigo.getText()), jFormattedTextFieldNumero.getText(), jComboBoxTipo.getSelectedItem().toString(), jComboBoxOperadora.getSelectedItem().toString());
         cargarTelefonosTblTelefonos();
         limpiar();
         desactivarEdicion();
@@ -415,7 +415,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         int respuesta = JOptionPane.showConfirmDialog(this, "Estas seguro que deceas eliminar el telefono seleccionado");
         if (respuesta == JOptionPane.YES_OPTION) {
-            controladorUsuario.eliminarTelefono(txtCodigo.getText());
+            controladorUsuario.eliminarTelefono(Integer.valueOf(txtCodigo.getText()));
             cargarTelefonosTblTelefonos();
             limpiar();
             desactivarEdicion();

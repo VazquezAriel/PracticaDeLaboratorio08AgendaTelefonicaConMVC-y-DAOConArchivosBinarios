@@ -7,52 +7,81 @@ package ec.edu.ups.dao;
 
 import ec.edu.ups.idao.ITelefonoDAO;
 import ec.edu.ups.modelo.Telefono;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
  * @author ariel
  */
 public class TelefonoDAO implements ITelefonoDAO{
+
+    /**
+     * Tamaño del archivo:
+     *
+     * codigo -> 4 bytes 
+     * numero -> 25 caracteres 
+     * tipo -> 25 caracteres 
+     * operadora -> 25 caracteres 
+     * usuario cedula -> 10 caracteres
+     *
+     * Total -> 89 bytes + 8 bytes extras = 97 bytes por registro
+     *
+     */
     
-    //Diccionario de Telefonos
-    private Map<String, Telefono> telefonos;
+    private RandomAccessFile archivo;
     private int codigo;
 
     //Constructor
     public TelefonoDAO() {
-        telefonos = new HashMap<String, Telefono>();
-        codigo = 0;
+        
+        try {
+            codigo = 0;
+            archivo = new RandomAccessFile("Datos/Telefonos.dat", "rw");
+            
+        } catch (IOException e) {
+            System.out.println("Error de lectura y escritura");
+            e.printStackTrace();
+        }
     }
 
     //Metodos de la Interface ITelefono
     @Override
     public void create(Telefono telefono) {
-        telefono.setCodigo(++codigo + "");
-        telefonos.put(telefono.getCodigo(), telefono);
+        telefono.setCodigo(++codigo);
+        try {
+            archivo.seek(archivo.length());
+            archivo.writeInt(telefono.getCodigo());
+            archivo.writeUTF(telefono.getNumero());
+            archivo.writeUTF(telefono.getTipo());
+            archivo.writeUTF(telefono.getOperadora());
+            archivo.writeUTF(telefono.getUsuario().getCedula());
+
+        } catch (IOException e) {
+            System.out.println("Error de  lectura y escritura(create:UsuarioDao)");
+            e.printStackTrace();
+
+        }
+        
     }
 
     @Override
     public void update(Telefono telefono) {
-        telefonos.put(telefono.getCodigo(), telefono);
     }
 
     @Override
     public void delete(Telefono telefono) {
-        telefonos.remove(telefono.getCodigo());
     }
 
     @Override
     public Collection<Telefono> findAll() {
-        Collection<Telefono> telefonosC = this.telefonos.values();
-        return telefonosC;
+        return null;
     }
 
     @Override
-    public Telefono read(String codigo) {
-        return telefonos.get(codigo);
+    public Telefono read(int codigo) {
+        return null;
     }
 
     @Override
