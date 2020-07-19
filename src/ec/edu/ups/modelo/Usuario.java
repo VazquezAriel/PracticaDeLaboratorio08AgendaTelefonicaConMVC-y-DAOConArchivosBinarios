@@ -5,7 +5,6 @@
  */
 package ec.edu.ups.modelo;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,19 +24,20 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String cedula, String nombre, String apellido, String correo, String contraseña) {
-        this.cedula = cedula;
-        this.nombre = validarEspacios(nombre, 25);
-        this.apellido = validarEspacios(apellido, 25);
-        this.correo = validarEspacios(correo, 50);
-        this.contraseña = contraseña;
-    }
+    public Usuario(String cedula, String nombre, String apellido, String correo, String contraseña, boolean validar) {
 
-    public Usuario(String cedula, String nombre, String apellido, String correo, String contraseña, List<Telefono> telefonos) {
+        if (validar) {
+            this.nombre = validarEspacios(nombre, 25);
+            this.apellido = validarEspacios(apellido, 25);
+            this.correo = validarEspacios(correo, 50);
+            
+        } else {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.correo = correo;
+        }
+        
         this.cedula = cedula;
-        this.nombre = validarEspacios(nombre, 25);
-        this.apellido = validarEspacios(apellido, 25);
-        this.correo = validarEspacios(correo, 50);
         this.contraseña = contraseña;
     }
 
@@ -81,30 +81,30 @@ public class Usuario {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    
+
     public String validarEspacios(String cadena, int longitud) {
         if (cadena.length() == longitud) {
             return cadena;
-            
+
         } else {
             if (cadena.length() < longitud) {
                 return llenarEspacios(cadena, longitud);
-                
+
             } else {
                 return cortarEspacios(cadena, longitud);
-                
+
             }
         }
     }
-    
+
     public String llenarEspacios(String cadena, int longitud) {
-        return String.format("%-"+longitud+"s", cadena);
-        
+        return String.format("%-" + longitud + "s", cadena);
+
     }
-    
+
     public String cortarEspacios(String cadena, int longitud) {
         return cadena.substring(0, longitud);
-        
+
     }
 
     //Metodos de la clase Object
@@ -143,4 +143,3 @@ public class Usuario {
     }
 
 }
-

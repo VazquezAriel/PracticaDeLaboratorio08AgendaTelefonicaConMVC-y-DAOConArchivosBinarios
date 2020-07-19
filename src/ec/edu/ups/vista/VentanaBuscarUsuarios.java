@@ -7,11 +7,8 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorUsuario;
 import ec.edu.ups.dao.TelefonoDAO;
-import ec.edu.ups.dao.UsuarioDAO;
 import ec.edu.ups.modelo.Telefono;
 import ec.edu.ups.modelo.Usuario;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

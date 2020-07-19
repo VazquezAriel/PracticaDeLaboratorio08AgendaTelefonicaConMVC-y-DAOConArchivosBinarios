@@ -71,10 +71,10 @@ public class UsuarioDAO implements IUsuarioDAO {
             
             while (salto < archivo.length()) {
                 archivo.seek(salto);
-                String cedulaArchivo = archivo.readUTF();;
+                String cedulaArchivo = archivo.readUTF();
                 
                 if (cedulaArchivo.equals(cedula)) {
-                    return new Usuario(cedula, archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF());
+                    return new Usuario(cedula, archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF().trim(), archivo.readUTF(), false);
                     
                 }
                 salto += 128;
@@ -91,6 +91,30 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public void update(Usuario usuario) {
+        try {
+            int salto = 0;
+            
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                String cedulaArchivo = archivo.readUTF();
+                
+                if (usuario.getCedula().equals(cedulaArchivo)) {
+                    archivo.writeUTF(usuario.getNombre());
+                    archivo.writeUTF(usuario.getApellido());
+                    archivo.writeUTF(usuario.getCorreo());
+                    archivo.writeUTF(usuario.getContraseña());
+                    break;
+                    
+                }
+                salto += 128;
+
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error de lectura (update: UsuarioDAO)");
+            e.printStackTrace();
+
+        }
     }
 
     @Override
@@ -114,7 +138,7 @@ public class UsuarioDAO implements IUsuarioDAO {
                 
                 if (correoArchivo.trim().equals(correo) && contraseñaArchivo.equals(contraseña)) {
                     archivo.seek(salto - 66);
-                    return new Usuario(archivo.readUTF(), archivo.readUTF().trim(), archivo.readUTF().trim(), correo, contraseña);
+                    return new Usuario(archivo.readUTF(), archivo.readUTF().trim(), archivo.readUTF().trim(), correo, contraseña, false);
                     
                 }
                 salto += 128;

@@ -38,18 +38,18 @@ public class ControladorUsuario {
 
     //Crea un Usuario atraves de la vista y lo agrega al diccionario creado en el DAO
     public void registrar(String cedula, String nombre, String apellido, String correo, String contraseña) {
-        usuario = new Usuario(cedula, nombre, apellido, correo, contraseña);
+        usuario = new Usuario(cedula, nombre, apellido, correo, contraseña, true);
         usuarioDAO.create(usuario);
     }
 
-    //Llama al DAO para obtener el Usuario correspondiente a la clave ingresada y lo muestra en pantalla atraves de la vista
+    //Retorna el usuario logeado
     public Usuario verUsuario() {
         return usuario;
     }
 
     //Genera un Usuario con la clave ingresada atraves de la vista y lo remplaza atraves del DAO
-    public void actualizar(String cedula, String nombre, String apellido, String correo, String contraseña, List<Telefono> telefonos) {
-        usuario = new Usuario(cedula, nombre, apellido, correo, contraseña, telefonos);
+    public void actualizar(String cedula, String nombre, String apellido, String correo, String contraseña) {
+        usuario = new Usuario(cedula, nombre, apellido, correo, contraseña, true);
         usuarioDAO.update(usuario);
     }
     
@@ -80,7 +80,7 @@ public class ControladorUsuario {
         }
     }
     
-    //inicio de secio
+    //inicio de secion
     public boolean validarUsuario(String correo, String contraseña) {
         usuario = usuarioDAO.login(correo, contraseña);
         if (usuario != null) {

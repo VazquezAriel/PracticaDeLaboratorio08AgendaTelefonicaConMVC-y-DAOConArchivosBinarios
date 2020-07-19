@@ -75,6 +75,7 @@ public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Actualizar Datos");
 
+        txtCedula.setEditable(false);
         txtCedula.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +208,7 @@ public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
         );
 
         pack();
@@ -231,10 +232,29 @@ public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        Usuario usuario = controladorUsuario.verUsuario();
-        controladorUsuario.actualizar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), txtContraseña.getText(), usuario.listarTelefonos());
-        JOptionPane.showMessageDialog(this, "Usuario actualizado con exito");
-        setVisible(false);
+        if (txtCedula.getText().equals("") || txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtCorreo.equals("") || txtContraseña.equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor rellene todos los campos");
+
+        } else {
+            
+            //Validamos que la cedula tenga 10 digitos
+            if (txtCedula.getText().length() == 10) {
+                
+                //Validamos que la contraseña tenga 8 digitos
+                if (txtContraseña.getText().length() == 8) {
+                    controladorUsuario.actualizar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), txtContraseña.getText());
+                    JOptionPane.showMessageDialog(this, "Usuario actualizado con exito");
+                    setVisible(false);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "La contraseña debe contar con 8 digitos");
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "La cedula debe tener 10 digitos");
+
+            }
+        }
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
