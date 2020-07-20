@@ -7,6 +7,8 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorUsuario;
 import ec.edu.ups.modelo.Usuario;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,12 +18,53 @@ import javax.swing.JOptionPane;
 public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
 
     private ControladorUsuario controladorUsuario;
+    //idiomas
+    private Locale localizacion;
+    private ResourceBundle mensaje;
+    private String alerta7;
+    private String alerta8;
+    private String alerta9;
+    private String alerta10;
     /**
      * Creates new form VentanaGestionUsuarios
      */
     public VentanaGestionUsuarios(ControladorUsuario controladorUsuario) {
         initComponents();
         this.controladorUsuario = controladorUsuario;
+        alerta7="Por favor rellene todos los campos";
+        alerta8 = "Usuario actualizado con exito";
+        alerta9="La contraseña debe contar con 8 digitos";
+        alerta10="La cedula debe tener 10 digitos";
+    }
+
+    public Locale getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(Locale localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public ResourceBundle getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(ResourceBundle mensaje) {
+        this.mensaje = mensaje;
+    }
+    public void cambiarIdioma(String idioma, String localidad){
+    labelCedula.setText(mensaje.getString("Cedula"));    
+    labelNombre.setText(mensaje.getString("Nombre"));
+    labelApellido.setText(mensaje.getString("Apellido"));
+    labelTitulo.setText(mensaje.getString("TituloAC"));
+    labelCorreo.setText(mensaje.getString("Correo"));
+    labelContraseña.setText(mensaje.getString("Contraseña"));
+    botonCancelar.setText(mensaje.getString("Cancelar"));
+    botonActualizar.setText(mensaje.getString("Actualizar"));
+    alerta7=mensaje.getString("alerta");
+    alerta9=mensaje.getString("alerta3");
+    alerta10=mensaje.getString("alerta4");
+    alerta8=mensaje.getString("alerta8");
     }
 
     /**
@@ -233,7 +276,7 @@ public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         if (txtCedula.getText().equals("") || txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtCorreo.equals("") || txtContraseña.equals("")) {
-            JOptionPane.showMessageDialog(this, "Por favor rellene todos los campos");
+            JOptionPane.showMessageDialog(this, alerta7);
 
         } else {
             
@@ -243,15 +286,15 @@ public class VentanaGestionUsuarios extends javax.swing.JInternalFrame {
                 //Validamos que la contraseña tenga 8 digitos
                 if (txtContraseña.getText().length() == 8) {
                     controladorUsuario.actualizar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), txtContraseña.getText());
-                    JOptionPane.showMessageDialog(this, "Usuario actualizado con exito");
+                    JOptionPane.showMessageDialog(this,alerta8);
                     setVisible(false);
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "La contraseña debe contar con 8 digitos");
+                    JOptionPane.showMessageDialog(this, alerta9);
 
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "La cedula debe tener 10 digitos");
+                JOptionPane.showMessageDialog(this, alerta10);
 
             }
         }

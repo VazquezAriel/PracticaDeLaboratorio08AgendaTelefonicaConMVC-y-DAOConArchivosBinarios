@@ -10,9 +10,12 @@ import ec.edu.ups.controlador.ControladorUsuario;
 import ec.edu.ups.modelo.Telefono;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -23,6 +26,13 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
     private List<String> operadoras;
     private ControladorUsuario controladorUsuario;
     private ControladorTelefono controladorTelefono;
+    private Locale localizacion;
+    private ResourceBundle mensaje;
+    private String alerta11;
+    private String alerta12;
+    private String alerta13;
+    private String alerta14;
+    private String alerta15;
 
     /**
      * Creates new form VentanaGestionTelefonos
@@ -32,7 +42,56 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
         this.controladorTelefono = controladorTelefono;
         initComponents();
         cargarDatosOperadoras();
+        alerta11= "Por favor seleccione un tipo de Telefono";
+        alerta12="Telefono agregado correctamente";
+        alerta13="Telefono actualizado correctamente";
+        alerta14="Estas seguro que deceas eliminar el telefono seleccionado";
+        alerta15="Telefono eliminado correctamente";
 
+    }
+
+    public Locale getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(Locale localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public ResourceBundle getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(ResourceBundle mensaje) {
+        this.mensaje = mensaje;
+    }
+    public void cambiarIdioma(String idioma, String localidad){
+        labelGestionDeTelefonos.setText(mensaje.getString("TituloG"));
+        labelCodigo.setText(mensaje.getString("Codigo"));
+        labelTipo.setText(mensaje.getString("Tipo"));
+        labelNumero.setText(mensaje.getString("Numero"));
+        labelOperadora.setText(mensaje.getString("Operadora"));
+       jButtonActualizar.setText(mensaje.getString("Actualizar"));
+       jButtonAgregar.setText(mensaje.getString("Agregar"));
+       jButtonCancelar.setText(mensaje.getString("Cancelar"));
+       jButtonEliminar.setText(mensaje.getString("Eliminar"));
+       TableColumnModel modelo = tablaTelefonos.getColumnModel();
+       modelo.getColumn(0).setHeaderValue(mensaje.getString("Codigo"));
+       modelo.getColumn(1).setHeaderValue(mensaje.getString("Tipo"));
+       modelo.getColumn(2).setHeaderValue(mensaje.getString("Numero"));
+       modelo.getColumn(3).setHeaderValue(mensaje.getString("Operadora"));
+       
+       jComboBoxOperadora.getItemAt(0);
+      
+      
+       
+       
+       alerta11=mensaje.getString("alerta11");
+       alerta12=mensaje.getString("alerta12");
+       alerta13=mensaje.getString("alerta13");
+       alerta14=mensaje.getString("alerta14");
+       alerta15=mensaje.getString("alerta15");
+       
     }
 
     public void cargarDatosOperadoras() {
@@ -363,7 +422,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
 
         if (jComboBoxTipo.getSelectedIndex() == 0) {
             jComboBoxTipo.requestFocus();
-            JOptionPane.showMessageDialog(this, "Por favor seleccione un tipo de Telefono");
+            JOptionPane.showMessageDialog(this,alerta11);
         }
     }//GEN-LAST:event_jFormattedTextFieldNumeroActionPerformed
 
@@ -371,7 +430,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
         controladorUsuario.agregarTelefono(Integer.valueOf(txtCodigo.getText()), jFormattedTextFieldNumero.getText(), jComboBoxTipo.getSelectedItem().toString(), jComboBoxOperadora.getSelectedItem().toString());
         cargarTelefonosTblTelefonos();
         limpiar();
-        JOptionPane.showMessageDialog(this, "Telefono agregado correctamente");
+        JOptionPane.showMessageDialog(this, alerta12);
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
@@ -404,7 +463,7 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
         limpiar();
         desactivarEdicion();
         jButtonAgregar.setEnabled(true);
-        JOptionPane.showMessageDialog(this, "Telefono actualizado correctamente");
+        JOptionPane.showMessageDialog(this, alerta13);
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -413,14 +472,14 @@ public class VentanaGestionTelefonos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        int respuesta = JOptionPane.showConfirmDialog(this, "Estas seguro que deceas eliminar el telefono seleccionado");
+        int respuesta = JOptionPane.showConfirmDialog(this, alerta14);
         if (respuesta == JOptionPane.YES_OPTION) {
             controladorUsuario.eliminarTelefono(Integer.valueOf(txtCodigo.getText()));
             cargarTelefonosTblTelefonos();
             limpiar();
             desactivarEdicion();
             jButtonAgregar.setEnabled(true);
-            JOptionPane.showMessageDialog(this, "Telefono eliminado correctamente");
+            JOptionPane.showMessageDialog(this, alerta15);
         }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 

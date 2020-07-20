@@ -10,8 +10,11 @@ import ec.edu.ups.dao.TelefonoDAO;
 import ec.edu.ups.modelo.Telefono;
 import ec.edu.ups.modelo.Usuario;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -21,6 +24,10 @@ public class VentanaBuscarUsuarios extends javax.swing.JInternalFrame {
 
     private ControladorUsuario controladorUsuario;
     private TelefonoDAO telefonoDAO;
+    //idioma
+    private Locale localizacion;
+    private ResourceBundle mensaje;
+    private String alerta16;
     /**
      * Creates new form VentanaBuscarUsuarios
      */
@@ -28,6 +35,40 @@ public class VentanaBuscarUsuarios extends javax.swing.JInternalFrame {
         initComponents();
         this.controladorUsuario = controladorUsuario;
         this.telefonoDAO = telefonoDAO;
+        alerta16="No se ha encontrado el usuario con la cedula ";
+    }
+
+    public Locale getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(Locale localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public ResourceBundle getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(ResourceBundle mensaje) {
+        this.mensaje = mensaje;
+    }
+     public void cambiarIdioma(String idioma, String localidad){
+        labelTitulo.setText(mensaje.getString("TituloU"));
+        labelApellido.setText(mensaje.getString("Apellido"));
+        labelNombre.setText(mensaje.getString("Nombre"));
+        labelCedula.setText(mensaje.getString("Cedula"));
+        labelCorreo.setText(mensaje.getString("Correo"));
+       botonBuscar.setText(mensaje.getString("Buscar"));
+       botonCancelar.setText(mensaje.getString("Cancelar"));
+       jButtonListarTodos.setText(mensaje.getString("ListarTodos"));
+       alerta16=mensaje.getString("alerta16");
+       TableColumnModel modelo = tablaTelefonos.getColumnModel();
+       modelo.getColumn(0).setHeaderValue(mensaje.getString("Codigo"));
+       modelo.getColumn(1).setHeaderValue(mensaje.getString("Tipo"));
+       modelo.getColumn(2).setHeaderValue(mensaje.getString("Numero"));
+       modelo.getColumn(3).setHeaderValue(mensaje.getString("Operadora"));
+       
     }
 
     /**
@@ -280,7 +321,7 @@ public class VentanaBuscarUsuarios extends javax.swing.JInternalFrame {
             cargarTelefonosTblTelefonos(controladorUsuario.listarTelefonos(usuario));
             
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha encontrado el usuario con la cedula " + cedula);
+            JOptionPane.showMessageDialog(this, alerta16+" " + cedula);
             limpiar();
         }
         

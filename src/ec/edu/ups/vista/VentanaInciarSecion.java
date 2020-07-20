@@ -6,6 +6,8 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorUsuario;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,12 +18,43 @@ public class VentanaInciarSecion extends javax.swing.JInternalFrame {
 
     private VentanaPrincipal ventanaPrincipal;
     private ControladorUsuario controladorUsuario;
+    //idioma
+    private Locale localizacion;
+    private ResourceBundle mensaje;
+    private String alerta5;
+    private String alerta6;
 
     public VentanaInciarSecion(ControladorUsuario controladorUsuario, VentanaPrincipal ventanaPrincipal) {
         initComponents();
         this.ventanaPrincipal = ventanaPrincipal;
         this.controladorUsuario = controladorUsuario;
+        alerta5="Datos Correctos";
+        alerta6="Credenciales Incorrectas";
     }
+
+    public Locale getLocalizacion() {
+        return localizacion;
+    }
+
+    public void setLocalizacion(Locale localizacion) {
+        this.localizacion = localizacion;
+    }
+
+    public ResourceBundle getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(ResourceBundle mensaje) {
+        this.mensaje = mensaje;
+    }
+     public void cambiarIdioma(String idioma, String localizacion) {
+     labelInicioDeSecion.setText(mensaje.getString("IniciarSesion"));
+     labelCorreo.setText(mensaje.getString("Correo"));
+     labelContraseña.setText(mensaje.getString("Contraseña"));
+     alerta5=mensaje.getString("alerta5");
+     alerta6=mensaje.getString("alerta6");
+     botonIniciarSecion.setText(mensaje.getString("IniciarSesion"));
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +97,7 @@ public class VentanaInciarSecion extends javax.swing.JInternalFrame {
 
         labelInicioDeSecion.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelInicioDeSecion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelInicioDeSecion.setText("Inicio de Secion");
+        labelInicioDeSecion.setText("Inicio de Sesion");
 
         labelCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCorreo.setText("Correo Electronico: ");
@@ -86,7 +119,7 @@ public class VentanaInciarSecion extends javax.swing.JInternalFrame {
             }
         });
 
-        botonIniciarSecion.setText("Iniciar Secion");
+        botonIniciarSecion.setText("Iniciar Sesion");
         botonIniciarSecion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonIniciarSecionActionPerformed(evt);
@@ -161,9 +194,9 @@ public class VentanaInciarSecion extends javax.swing.JInternalFrame {
             ventanaPrincipal.getIniciarSecionMenuItem().setVisible(false);
             ventanaPrincipal.getRegistrarMenuItem().setVisible(false);
             setVisible(false);
-            JOptionPane.showMessageDialog(this, "Datos Correctos");
+            JOptionPane.showMessageDialog(this, alerta5);
         } else {
-            JOptionPane.showMessageDialog(this, "Credenciales Incorrectas");
+            JOptionPane.showMessageDialog(this, alerta6);
         }
         limpiar();
     }//GEN-LAST:event_botonIniciarSecionActionPerformed

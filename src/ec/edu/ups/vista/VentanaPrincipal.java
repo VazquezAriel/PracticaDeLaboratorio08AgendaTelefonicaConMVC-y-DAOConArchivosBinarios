@@ -37,16 +37,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     //clases para la localizacion
     private Locale localizacion;
-    private ResourceBundle mensajes;
+    private ResourceBundle mensaje;
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
-        localizacion = Locale.getDefault();
-        mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
-
+         
         //oculto ventanas
         menuAgenda.setVisible(false);
         cerrarSesionMenuItem.setVisible(false);
@@ -69,22 +66,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         desktopPane.add(ventanaRegistrarUsuario);
         desktopPane.add(ventanaIniciarSecion);
         desktopPane.add(ventanaGestionTelefonos);
+      //Idioma  
+     localizacion = new Locale("es", "EC");
+     mensaje = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);   
         
-        cambiarIdioma();
     }
     
-    public void cambiarIdioma() {
-        menuInicio.setText(mensajes.getString("Inicio"));
-        menuAgenda.setText(mensajes.getString("Agenda"));
-        jMenuIdioma.setText(mensajes.getString("Idioma"));
-        jMenuItemEspañol.setText(mensajes.getString("Español"));
-        jMenuItemIngles.setText(mensajes.getString("Ingles"));
-        iniciarSecionMenuItem.setText(mensajes.getString("IniciarSesion"));
-        registrarMenuItem.setText(mensajes.getString("RegistrarUsuario"));
-        cerrarSesionMenuItem.setText(mensajes.getString("CerrarSesion"));
-        salirMenuItem.setText(mensajes.getString("Salir"));
-        telefonosMenuItem.setText(mensajes.getString("Telefonos"));
-        usuariosMenuItem.setText(mensajes.getString("Usuarios"));
+    public void cambiarIdioma(String idioma, String localidad) {
+        localizacion = new Locale(idioma, localidad);
+        mensaje = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
+        menuInicio.setText(mensaje.getString("Inicio"));
+        menuAgenda.setText(mensaje.getString("Agenda"));
+        jMenuIdioma.setText(mensaje.getString("Idioma"));
+        jMenuItemEspañol.setText(mensaje.getString("Español"));
+        jMenuItemIngles.setText(mensaje.getString("Ingles"));
+        iniciarSecionMenuItem.setText(mensaje.getString("IniciarSesion"));
+        registrarMenuItem.setText(mensaje.getString("RegistrarUsuario"));
+        cerrarSesionMenuItem.setText(mensaje.getString("CerrarSesion"));
+        salirMenuItem.setText(mensaje.getString("Salir"));
+        telefonosMenuItem.setText(mensaje.getString("Telefonos"));
+        usuariosMenuItem.setText(mensaje.getString("Usuarios"));
+        listarMenuItem.setText(mensaje.getString("Listar"));
+        if (ventanaBuscarUsuarios!=null) {
+           ventanaRegistrarUsuario.setMensaje(mensaje);
+           ventanaRegistrarUsuario.cambiarIdioma(idioma, localidad);
+           ventanaIniciarSecion.setMensaje(mensaje);
+           ventanaIniciarSecion.cambiarIdioma(idioma, localidad);
+           ventanaGestionUsuarios.setMensaje(mensaje);
+           ventanaGestionUsuarios.cambiarIdioma(idioma, localidad);
+           ventanaGestionTelefonos.setMensaje(mensaje);
+           ventanaGestionTelefonos.cambiarIdioma(idioma, localidad);
+           ventanaBuscarUsuarios.setMensaje(mensaje);
+           ventanaBuscarUsuarios.cambiarIdioma(idioma, localidad);
+        }
     }
 
     public JMenuItem getCerrarSesionMenuItem() {
@@ -117,7 +131,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menuInicio = new javax.swing.JMenu();
         iniciarSecionMenuItem = new javax.swing.JMenuItem();
         registrarMenuItem = new javax.swing.JMenuItem();
-        listarTelefonosMenuItem = new javax.swing.JMenuItem();
+        listarMenuItem = new javax.swing.JMenuItem();
         cerrarSesionMenuItem = new javax.swing.JMenuItem();
         salirMenuItem = new javax.swing.JMenuItem();
         menuAgenda = new javax.swing.JMenu();
@@ -152,15 +166,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         menuInicio.add(registrarMenuItem);
 
-        listarTelefonosMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        listarTelefonosMenuItem.setMnemonic('x');
-        listarTelefonosMenuItem.setText("Listar telefonos");
-        listarTelefonosMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        listarMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        listarMenuItem.setMnemonic('x');
+        listarMenuItem.setText("Listar telefonos");
+        listarMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listarTelefonosMenuItemActionPerformed(evt);
+                listarMenuItemActionPerformed(evt);
             }
         });
-        menuInicio.add(listarTelefonosMenuItem);
+        menuInicio.add(listarMenuItem);
 
         cerrarSesionMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         cerrarSesionMenuItem.setText("Cerrar sesion");
@@ -239,9 +253,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void listarTelefonosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarTelefonosMenuItemActionPerformed
+    private void listarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarMenuItemActionPerformed
         ventanaBuscarUsuarios.setVisible(true);
-    }//GEN-LAST:event_listarTelefonosMenuItemActionPerformed
+    }//GEN-LAST:event_listarMenuItemActionPerformed
 
     private void iniciarSecionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarSecionMenuItemActionPerformed
         ventanaIniciarSecion.setVisible(true);
@@ -272,14 +286,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemEspañolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEspañolActionPerformed
         localizacion = new Locale("es", "EC");
-        mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
-        cambiarIdioma();        
+          this.cambiarIdioma("es", "EC");       
     }//GEN-LAST:event_jMenuItemEspañolActionPerformed
 
     private void jMenuItemInglesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInglesActionPerformed
         localizacion = new Locale("en", "EU");
-        mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
-        cambiarIdioma(); 
+         this.cambiarIdioma("en", "EU");
     }//GEN-LAST:event_jMenuItemInglesActionPerformed
 
     /**
@@ -324,7 +336,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuIdioma;
     private javax.swing.JMenuItem jMenuItemEspañol;
     private javax.swing.JMenuItem jMenuItemIngles;
-    private javax.swing.JMenuItem listarTelefonosMenuItem;
+    private javax.swing.JMenuItem listarMenuItem;
     private javax.swing.JMenu menuAgenda;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuInicio;
